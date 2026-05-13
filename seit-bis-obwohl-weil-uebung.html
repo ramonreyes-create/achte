@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>seit, bis, obwohl, weil – Übung</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f5f7fb;color:#1f2937;line-height:1.55}
+header{background:linear-gradient(135deg,#58cc02,#1cb0f6);color:white;text-align:center;padding:55px 20px}
+header h1{font-size:2.6rem;margin-bottom:10px}
+header p{font-size:1.1rem;max-width:850px;margin:auto}
+.container{max-width:1100px;margin:auto;padding:30px 20px}
+.card{background:white;border-radius:24px;padding:26px;margin-bottom:24px;box-shadow:0 10px 25px rgba(0,0,0,.08)}
+h2{margin-bottom:14px;color:#111827}
+.rule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.rule{border-radius:20px;padding:18px;background:#eef2ff;border-left:7px solid #1cb0f6}
+.rule strong{font-size:1.25rem;color:#3730a3}
+.example{background:#f0fdf4;border-left:7px solid #58cc02;border-radius:18px;padding:14px;margin-top:10px;font-weight:700}
+.warning{background:#fef3c7;border-left:7px solid #f59e0b;border-radius:18px;padding:16px;margin:15px 0;font-weight:800}
+.progress{height:18px;background:#e5e7eb;border-radius:999px;overflow:hidden;margin:15px 0}
+.bar{height:100%;width:0%;background:#58cc02;transition:.3s}
+.questionBox{border-top:2px solid #e5e7eb;padding-top:18px;margin-top:18px}
+.number{display:inline-block;background:#58cc02;color:white;border-radius:999px;width:34px;height:34px;text-align:center;line-height:34px;font-weight:900;margin-right:8px}
+.question{font-size:1.15rem;font-weight:900;margin-bottom:12px}
+.options{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+button{background:#58cc02;color:white;border:none;border-radius:16px;padding:13px 20px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 #46a302;margin:8px 8px 8px 0}
+button:hover{filter:brightness(.96)}
+.option{background:#eef2ff;color:#111;box-shadow:none}
+.option.selected{background:#1cb0f6;color:white}
+.blue{background:#1cb0f6;box-shadow:0 5px 0 #1689c7}
+.red{background:#dc2626;box-shadow:0 5px 0 #991b1b}
+input,textarea{width:100%;padding:13px;border:2px solid #d1d5db;border-radius:14px;font-size:1rem;margin:8px 0 8px}
+textarea{min-height:90px;resize:vertical}
+.wordparts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.part{background:#e0e7ff;color:#3730a3;border-radius:999px;padding:8px 12px;font-weight:900}
+.feedback{display:none;margin-top:10px;padding:12px;border-radius:14px;font-weight:900}
+.correct{display:block;background:#dcfce7;color:#166534}
+.wrong{display:block;background:#fee2e2;color:#991b1b}
+.neutral{display:block;background:#eef2ff;color:#3730a3}
+.solution{display:none;background:#f3f4f6;border-radius:18px;padding:18px;margin-top:18px}
+footer{text-align:center;padding:30px;color:#666}
+@media(max-width:700px){header h1{font-size:2rem}}
+</style>
+</head>
+<body>
+
+<header>
+<h1>seit, bis, obwohl und weil</h1>
+<p>Interaktive Übung: Präpositionen und Konjunktionen – Niveau A2/B1</p>
+</header>
+
+<main class="container">
+
+<section class="card">
+<h2>1. Erklärung</h2>
+<div class="rule-grid">
+<div class="rule">
+<strong>seit</strong>
+<p>Beginn in der Vergangenheit, dauert bis jetzt.</p>
+<div class="example">Ich lerne Deutsch seit 2022.</div>
+<div class="example">Seit ich übe, bin ich besser.</div>
+</div>
+<div class="rule">
+<strong>bis</strong>
+<p>Ende oder Endpunkt.</p>
+<div class="example">Ich bleibe bis 15 Uhr.</div>
+<div class="example">Ich warte, bis du kommst.</div>
+</div>
+<div class="rule">
+<strong>weil</strong>
+<p>Grund. Antwort auf: Warum?</p>
+<div class="example">Ich lerne, weil ich eine Prüfung habe.</div>
+</div>
+<div class="rule">
+<strong>obwohl</strong>
+<p>Gegensatz. Auf Spanisch: aunque.</p>
+<div class="example">Er geht joggen, obwohl es regnet.</div>
+</div>
+</div>
+
+<div class="warning">
+<strong>Wichtig:</strong> Bei <strong>seit, bis, weil</strong> und <strong>obwohl</strong> als Konjunktionen steht das konjugierte Verb am Ende des Nebensatzes.
+</div>
+</section>
+
+<section class="card">
+<h2>2. Übungen</h2>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<p><strong>Punkte:</strong> <span id="score">0</span> / 20</p>
+<div id="taskArea"></div>
+
+<button onclick="checkAll()">Alles prüfen</button>
+<button class="blue" onclick="showSolutions()">Lösungen anzeigen</button>
+<button class="red" onclick="resetAll()">Zurücksetzen</button>
+
+<div id="finalFeedback" class="feedback"></div>
+
+<div id="solutions" class="solution">
+<h2>Lösungen</h2>
+<div id="solutionList"></div>
+</div>
+</section>
+
+</main>
+
+<footer>
+<p>© 2026 – Deutsch Grammatik</p>
+</footer>
+
+<script>
+const TASKS = [{"type": "choice", "q": "Ich lerne Deutsch ____ zwei Jahren.", "answer": "seit", "options": ["seit", "bis", "weil", "obwohl"], "explain": "seit = desde hace; Situation dauert bis jetzt."}, {"type": "choice", "q": "Ich warte hier, ____ du kommst.", "answer": "bis", "options": ["seit", "bis", "weil", "obwohl"], "explain": "bis = hasta que; Ende eines Zeitraums."}, {"type": "choice", "q": "Ich gehe nicht zur Schule, ____ ich krank bin.", "answer": "weil", "options": ["seit", "bis", "weil", "obwohl"], "explain": "weil = porque; gibt einen Grund an."}, {"type": "choice", "q": "Er geht zum Training, ____ er müde ist.", "answer": "obwohl", "options": ["seit", "bis", "weil", "obwohl"], "explain": "obwohl = aunque; Gegensatz."}, {"type": "choice", "q": "Wir bleiben im Klassenzimmer, ____ der Lehrer kommt.", "answer": "bis", "options": ["seit", "bis", "weil", "obwohl"], "explain": "bis leitet einen Nebensatz ein: Verb am Ende."}, {"type": "choice", "q": "Sie ist besser in Mathe, ____ sie jeden Tag übt.", "answer": "seit", "options": ["seit", "bis", "weil", "obwohl"], "explain": "seit als Konjunktion: seit sie übt."}, {"type": "choice", "q": "Ich mache die Hausaufgaben, ____ ich morgen einen Test habe.", "answer": "weil", "options": ["seit", "bis", "weil", "obwohl"], "explain": "weil gibt den Grund an."}, {"type": "choice", "q": "Er bekommt gute Noten, ____ er nicht viel lernt.", "answer": "obwohl", "options": ["seit", "bis", "weil", "obwohl"], "explain": "obwohl zeigt einen Gegensatz."}, {"type": "fill", "q": "Ergänze: Ich wohne hier ____ 2020.", "answer": "seit", "explain": "seit + Zeitpunkt: seit 2020."}, {"type": "fill", "q": "Ergänze: Der Unterricht dauert ____ 15 Uhr.", "answer": "bis", "explain": "bis + Endpunkt: bis 15 Uhr."}, {"type": "fill", "q": "Ergänze: Ich bin müde, ____ ich spät ins Bett gegangen bin.", "answer": "weil", "explain": "Grund: weil ich spät ins Bett gegangen bin."}, {"type": "fill", "q": "Ergänze: Sie kommt zur Schule, ____ sie Kopfschmerzen hat.", "answer": "obwohl", "explain": "Gegensatz: obwohl sie Kopfschmerzen hat."}, {"type": "order", "q": "Ordne den Nebensatz: Ich warte, bis / du / fertig / bist.", "answer": "Ich warte, bis du fertig bist.", "parts": ["Ich warte,", "bis", "du", "fertig", "bist."], "explain": "Im Nebensatz steht das konjugierte Verb am Ende: bist."}, {"type": "order", "q": "Ordne den Nebensatz: Ich lerne besser, seit / ich / jeden Tag / übe.", "answer": "Ich lerne besser, seit ich jeden Tag übe.", "parts": ["Ich lerne besser,", "seit", "ich", "jeden Tag", "übe."], "explain": "Seit als Konjunktion: Verb am Ende."}, {"type": "order", "q": "Ordne den Nebensatz: Ich bleibe zu Hause, weil / ich / krank / bin.", "answer": "Ich bleibe zu Hause, weil ich krank bin.", "parts": ["Ich bleibe zu Hause,", "weil", "ich", "krank", "bin."], "explain": "Weil-Satz: Verb am Ende."}, {"type": "order", "q": "Ordne den Nebensatz: Er geht joggen, obwohl / es / regnet.", "answer": "Er geht joggen, obwohl es regnet.", "parts": ["Er geht joggen,", "obwohl", "es", "regnet."], "explain": "Obwohl-Satz: Verb am Ende."}, {"type": "transform", "q": "Verbinde mit weil: Ich lerne viel. Ich habe morgen eine Prüfung.", "answer": "Ich lerne viel, weil ich morgen eine Prüfung habe.", "explain": "weil verbindet zwei Sätze und nennt den Grund."}, {"type": "transform", "q": "Verbinde mit obwohl: Sie schreibt gute Noten. Sie lernt wenig.", "answer": "Sie schreibt gute Noten, obwohl sie wenig lernt.", "explain": "obwohl zeigt einen Gegensatz."}, {"type": "transform", "q": "Verbinde mit bis: Ich bleibe hier. Der Bus kommt.", "answer": "Ich bleibe hier, bis der Bus kommt.", "explain": "bis zeigt den Endpunkt."}, {"type": "transform", "q": "Verbinde mit seit: Ich bin motivierter. Ich mache Sport.", "answer": "Ich bin motivierter, seit ich Sport mache.", "explain": "seit zeigt eine Veränderung ab einem Zeitpunkt."}];
+let selectedAnswers = {};
+
+function normalize(text){
+return String(text).trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[.!?]/g,"");
+}
+
+function renderTasks(){
+let area = document.getElementById("taskArea");
+area.innerHTML = "";
+
+TASKS.forEach((task,index) => {
+let box = document.createElement("div");
+box.className = "questionBox";
+
+let inner = `<div class="question"><span class="number">${index+1}</span>${task.q}</div>`;
+
+if(task.type === "choice"){
+inner += `<div class="options">`;
+task.options.forEach(opt => {
+inner += `<button class="option" onclick="selectOption(${index}, '${opt}', this)">${opt}</button>`;
+});
+inner += `</div>`;
+} else if(task.type === "fill"){
+inner += `<input id="input${index}" placeholder="Antwort schreiben...">`;
+} else if(task.type === "order"){
+inner += `<div class="wordparts">`;
+task.parts.forEach(p => inner += `<span class="part">${p}</span>`);
+inner += `</div><input id="input${index}" placeholder="Schreibe den ganzen Satz richtig...">`;
+} else if(task.type === "transform"){
+inner += `<textarea id="input${index}" placeholder="Schreibe den verbundenen Satz..."></textarea>`;
+}
+
+inner += `<div id="fb${index}" class="feedback"></div>`;
+box.innerHTML = inner;
+area.appendChild(box);
+});
+}
+
+function selectOption(index,opt,btn){
+selectedAnswers[index] = opt;
+let buttons = btn.parentElement.querySelectorAll("button");
+buttons.forEach(b => b.classList.remove("selected"));
+btn.classList.add("selected");
+}
+
+function getUserAnswer(task,index){
+if(task.type === "choice") return selectedAnswers[index] || "";
+return document.getElementById("input"+index).value;
+}
+
+function checkAll(){
+let score = 0;
+
+TASKS.forEach((task,index) => {
+let user = getUserAnswer(task,index);
+let fb = document.getElementById("fb"+index);
+let ok = normalize(user) === normalize(task.answer);
+
+if(ok){
+score++;
+fb.className = "feedback correct";
+fb.innerText = "✅ Richtig!";
+} else {
+fb.className = "feedback wrong";
+fb.innerHTML = "❌ Noch nicht. Richtige Antwort: <strong>" + task.answer + "</strong><br><small>" + task.explain + "</small>";
+}
+});
+
+document.getElementById("score").innerText = score;
+document.getElementById("bar").style.width = Math.round((score/TASKS.length)*100) + "%";
+
+let final = document.getElementById("finalFeedback");
+if(score === TASKS.length){
+final.className = "feedback correct";
+final.innerText = "🎉 Sehr gut! Alles richtig.";
+} else {
+final.className = "feedback neutral";
+final.innerText = "Du hast " + score + " von " + TASKS.length + " richtig. Kontrolliere die Verbposition im Nebensatz.";
+}
+}
+
+function showSolutions(){
+let sol = document.getElementById("solutions");
+sol.style.display = sol.style.display === "block" ? "none" : "block";
+}
+
+function renderSolutions(){
+let list = document.getElementById("solutionList");
+list.innerHTML = "";
+TASKS.forEach((task,index) => {
+list.innerHTML += `<p><strong>${index+1}.</strong> ${task.answer}<br><small>${task.explain}</small></p>`;
+});
+}
+
+function resetAll(){
+selectedAnswers = {};
+document.getElementById("score").innerText = "0";
+document.getElementById("bar").style.width = "0%";
+document.getElementById("finalFeedback").className = "feedback";
+renderTasks();
+}
+
+renderTasks();
+renderSolutions();
+</script>
+
+</body>
+</html>
